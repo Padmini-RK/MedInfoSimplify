@@ -22,7 +22,7 @@ router.post('/login', async(req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({email});
-        const errorObj = {error:'Authentication Failed', message: "Check email or password entered"};
+        const errorObj = {success: false, error:'Authentication Failed', message: "Check email or password entered"};
         if (!user){
             return res.status(401). send(errorObj)
         }
@@ -31,7 +31,7 @@ router.post('/login', async(req, res) => {
             return res.status(401).send(errorObj);
         }
         const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'});
-        res.status(200).json({ token });
+        res.status(200).send({ token, success: true});
     }catch(error){
         res.status(500).send(error.message);
     }
