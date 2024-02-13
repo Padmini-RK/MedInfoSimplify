@@ -61,6 +61,8 @@ router.post('/login', async(req, res) => {
             );
         res.status(200).send({
             token,
+            username: user.userName,
+            email: user.email,
             success: true
         });
     }catch(error){
