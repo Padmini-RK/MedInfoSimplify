@@ -11,13 +11,13 @@ router.post('/upload', fileUpload, (req, res) => {
       message: 'Please upload at least one image file.'
     });
   }
-  console.log('This is the path of the uploded file', req?.file?.path)
+  console.log('This is the path of the uploded file', req?.file?.path, req.file)
   // res.status(200).json({
   //   success: true,
   //   message: 'File uploaded successfully',
   //   file: req.file,
   // });
-  const processedImagePath = './processed/' + req.file.filename; // Define the path for the processed image
+  const processedImagePath = './processed/' + req.file.filename.replace(/\.\w+$/, '.png'); // Define the path for the processed image
 
   // Image preprocessing with Sharp
   processImage(req.file.path, processedImagePath)
